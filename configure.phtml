@@ -1,0 +1,37 @@
+<form action="<?php echo _url('extension', 'configure', 'e', urlencode($this->getName())); ?>" method="post">
+    <input type="hidden" name="_csrf" value="<?php echo FreshRSS_Auth::csrfToken(); ?>" />
+    <div class="form-group">
+	<p>Shown below are the feeds, to which this addon will apply Readability Parsing. Remember to hit <b>Submit</b> at the bottom after making changes.</p>
+	<?php
+		foreach ($this->getCategories() as $c) {
+	?>
+
+		<h3><?php echo $c->name()?></h3>
+		<table>
+		<tr><td>Readability</td><td>Feed</td></tr>
+		<?php
+			foreach ( $c->feeds() as $f) {
+		?>
+
+			<tr>
+			<td> <input type="checkbox" id="read_<?php echo $f->id() ?>" name="read_<?php echo $f->id() ?>" value="1" <?php echo $this->getConfStoreR($f->id()) ? 'checked' : ''; ?>> </td>
+	    		<td><?php echo $f->name() ?></td>
+			</tr>
+		
+		<?php
+			}
+		?>
+		</table>
+	<?php
+		}
+	?>
+	<br>
+    </div>
+
+    <div class="form-group form-actions">
+	<div class="group-controls">
+	    <button type="submit" class="btn btn-important"><?php echo _t('gen.action.submit'); ?></button>
+	    <button type="reset" class="btn"><?php echo _t('gen.action.cancel'); ?></button>
+	</div>
+    </div>
+</form>

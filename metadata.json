@@ -1,0 +1,8 @@
+{
+	"name": "Readability built-in",
+	"author": "timendum",
+	"description": "Fetch article content for selected feeds with built-in Readability",
+	"version": "0.1",
+	"entrypoint": "Readability",
+	"type": "user"
+}
