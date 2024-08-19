@@ -15,7 +15,7 @@ class ReadabilityExtension extends Minz_Extension {
     public function init() {
         $this->registerHook('entry_before_insert', array($this, 'fetchStuff'));
         if (is_null(FreshRSS_Context::$user_conf->read_ext_readability)) {
-		FreshRSS_Context::$user_conf->read_ext_readability = [];
+		FreshRSS_Context::$user_conf->read_ext_readability = "[]";
 	 	FreshRSS_Context::$user_conf->save();
 	}
 
@@ -83,10 +83,13 @@ class ReadabilityExtension extends Minz_Extension {
             return;
 	}
 
-        if (FreshRSS_Context::$user_conf->read_ext_readability != '') {
-            $this->rStore = json_decode(FreshRSS_Context::$user_conf->read_ext_readability, true);
-	} else {
-	    $this->rStore = [];
+        $this->rStore = [];
+	if (FreshRSS_Context::$user_conf->read_ext_readability != '') {
+		try {
+            		$this->rStore = json_decode(FreshRSS_Context::$user_conf->read_ext_readability, true);
+		} catch (TypeError $e) {
+			// ok	
+		}
 	}
     }
 
